@@ -1,0 +1,46 @@
+name: Release
+
+# Run by hand from the Actions tab (or `gh workflow run release.yml`), on main,
+# after the version to publish has been committed.
+on:
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Publish to npm
+    # Only ever publish from main of the real repository, never a fork.
+    if: github.repository == 'e-cline/js_env' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      # Push the release tag.
+      contents: write
+      # Authenticate to npm through trusted publishing (OIDC) and sign
+      # provenance attestations; no long-lived npm token is stored.
+      id-token: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      # Installs Vite+, Node and pnpm, then runs `vp install`.
+      - uses: voidzero-dev/setup-vp@68f39c78aaf39be468cabd2afb09c162574c84af # v1.21.2
+        with:
+          node-version-file: .node-version
+          cache: true
+      # The version of pnpm pinned by `packageManager` has to be on the PATH.
+      - run: corepack enable
+
+      - run: vp run test
+      # `prepack` builds `dist/` first. Fails if this version is already on npm.
+      - run: pnpm publish --no-git-checks
+        env:
+          NPM_CONFIG_PROVENANCE: true
+      - name: Tag the release
+        run: |
+          version=$(node -p "require('./package.json').version")
+          git tag "v$version"
+          git push origin "v$version"

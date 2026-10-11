@@ -1,0 +1,12 @@
+allowBuilds:
+  esbuild: true
+
+# Vite+ ships its own Vite build. Without the override, anything that depends
+# on `vite` pulls in a second, upstream copy.
+overrides:
+  vite: npm:@voidzero-dev/vite-plus-core@0.2.9
+peerDependencyRules:
+  allowAny:
+    - vite
+  allowedVersions:
+    vite: '*'

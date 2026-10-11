@@ -1,0 +1,52 @@
+{
+  "name": "@e-cline/js_env",
+  "version": "0.0.1",
+  "description": "IS_DEV/IS_PROD constants resolved at bundle time through package.json export conditions.",
+  "keywords": [
+    "development",
+    "environment",
+    "export-conditions",
+    "production"
+  ],
+  "homepage": "https://github.com/e-cline/js_env#readme",
+  "bugs": {
+    "url": "https://github.com/e-cline/js_env/issues"
+  },
+  "license": "MIT",
+  "author": "Ethan Cline",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/e-cline/js_env.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/env.production.d.ts",
+      "development": "./dist/env.development.js",
+      "production": "./dist/env.production.js",
+      "default": "./dist/env.production.js"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "fmt": "vp fmt",
+    "check": "vp check",
+    "prepare": "vp config",
+    "prepack": "vp run build"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "typescript": "^7.0.2",
+    "vite-plus": "0.2.9"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@12.8.2"
+}

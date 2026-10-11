@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "strict": true,
+
+    "target": "ESNext",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "moduleDetection": "force",
+    "moduleResolution": "Bundler",
+    "module": "ESNext",
+
+    "declaration": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+
+    "noEmit": true,
+
+    "types": []
+  },
+
+  "include": ["src"]
+}
