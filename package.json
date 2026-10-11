@@ -1,6 +1,6 @@
 {
   "name": "@e-cline/js_env",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "IS_DEV/IS_PROD constants resolved at bundle time through package.json export conditions.",
   "keywords": [
     "development",
